@@ -7,6 +7,7 @@ import {
   Outlet,
   createBrowserRouter,
   RouterProvider,
+  
 } from 'react-router-dom'
 import Home from './pages/Home'
 import HHome1 from './pages/Home/H1'
@@ -16,7 +17,7 @@ import ErrorPage from '@/pages/ErrorPage'
 
 import './App.css'
 
-export function sleep(n = 0) {
+export function sleep(n = 1000) {
   return new Promise((r) => setTimeout(r, n))
 }
 
@@ -65,6 +66,7 @@ function App() {
           {
             path: 'home',
             // lazy: () => import('./pages/Home'), //不对, 得用 module.default
+            loader: Loader,
             lazy: async () => {
               let module = await import('./pages/Home')
               let Component = module.default

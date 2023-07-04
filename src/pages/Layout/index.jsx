@@ -1,8 +1,15 @@
 import React from 'react'
 import styles from './index.module.scss'
-import { Link, Outlet } from 'react-router-dom'
+import {
+  Link,
+  Outlet,
+  useNavigation,
+} from 'react-router-dom'
+import Loading from '@/components/Loading'
 
 const Layout = () => {
+  const navigation = useNavigation()
+
   return (
     <div className={styles.container}>
       <div className={styles.sider}>
@@ -13,9 +20,14 @@ const Layout = () => {
         <Link to='/order'>order</Link>
         <br />
         <Link to='/home/h1'>h1</Link>
+        <div>{navigation.state}</div>
       </div>
       <div className={styles.content}>
-        <Outlet></Outlet>
+        {navigation.state === 'loading' ? (
+          <Loading></Loading>
+        ) : (
+          <Outlet></Outlet>
+        )}
       </div>
     </div>
   )

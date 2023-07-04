@@ -1,0 +1,15 @@
+.loading {
+  height: 30px;
+  width: 30px;
+  background-color: lightgreen;
+  animation: spin 2s infinite;
+}
+
+@keyframes spin {
+  0% {
+    rotate: 0deg;
+  }
+  100% {
+    rotate: 360deg;
+  }
+}
