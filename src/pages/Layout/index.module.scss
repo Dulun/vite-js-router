@@ -1,0 +1,27 @@
+.container {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+
+  color: #fff;
+  font-size: 14px;
+  font-family: 'Microsoft YaHei';
+
+  a {
+    color: #fff;
+    font-size: 14px;
+    text-decoration: none;
+    text-decoration-color: transparent;
+  }
+}
+
+.sider {
+  width: 200px;
+  height: 100%;
+  background-color: rgb(76, 72, 72);
+}
+
+.content {
+  flex-grow: 1;
+  background-color: rgb(17, 17, 24);
+}
