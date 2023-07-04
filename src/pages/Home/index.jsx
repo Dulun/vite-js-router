@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Outlet } from 'react-router-dom'
+import { Outlet, useLoaderData } from 'react-router-dom'
 import { Dialog } from '@reach/dialog'
 import '@reach/dialog/styles.css'
 
@@ -7,6 +7,7 @@ const Home = (props) => {
   const [showDialog, setShowDialog] = React.useState(false)
   const open = () => setShowDialog(true)
   const close = () => setShowDialog(false)
+  const data = useLoaderData()
 
   return (
     <div>
@@ -17,6 +18,8 @@ const Home = (props) => {
         </button>
         <p>Hello there. I am a dialog</p>
       </Dialog>
+      <p>data:</p>
+      {data.data}
     </div>
   )
 }

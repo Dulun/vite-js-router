@@ -7,13 +7,13 @@ import {
   Outlet,
   createBrowserRouter,
   RouterProvider,
-  
 } from 'react-router-dom'
 import Home from './pages/Home'
 import HHome1 from './pages/Home/H1'
 import Order from './pages/Order'
 import Layout from './pages/Layout'
 import ErrorPage from '@/pages/ErrorPage'
+import { fetchData } from '@/api'
 
 import './App.css'
 
@@ -22,10 +22,16 @@ export function sleep(n = 1000) {
 }
 
 export async function Loader() {
-  await sleep()
-  return {
-    date: new Date().toISOString(),
-  }
+  return await fetchData()
+  await sleep(1000)
+  return null
+  // return {
+  //   date: new Date().toISOString(),
+  // }
+} 
+
+const actionS1 = async () => {
+  return await fetchData()
 }
 
 function App() {
@@ -67,6 +73,7 @@ function App() {
             path: 'home',
             // lazy: () => import('./pages/Home'), //不对, 得用 module.default
             loader: Loader,
+            action: actionS1,
             lazy: async () => {
               let module = await import('./pages/Home')
               let Component = module.default

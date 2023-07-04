@@ -2,7 +2,7 @@
   height: 30px;
   width: 30px;
   background-color: lightgreen;
-  animation: spin 2s infinite;
+  animation: spin 2s linear infinite;
 }
 
 @keyframes spin {
