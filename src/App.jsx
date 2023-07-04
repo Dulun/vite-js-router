@@ -70,6 +70,12 @@ function App() {
               let Component = module.default
               return { Component }
             },
+            children: [
+              {
+                path: ':id',
+                element: <Home></Home>,
+              },
+            ],
           },
           {
             path: 'order',
