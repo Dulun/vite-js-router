@@ -20,6 +20,8 @@ const Layout = () => {
         <Link to='/order'>order</Link>
         <br />
         <Link to='/home/h1'>h1</Link>
+        <br />
+        <Link to='/about'>About</Link>
         <div>{navigation.state}</div>
       </div>
       <div className={styles.content}>

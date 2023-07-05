@@ -8,12 +8,14 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from 'react-router-dom'
-import Home from './pages/Home'
+import Home from '@/pages/Home'
 import HHome1 from './pages/Home/H1'
 import Order from './pages/Order'
 import Layout from './pages/Layout'
 import ErrorPage from '@/pages/ErrorPage'
+import About from '@/pages/About'
 import { fetchData } from '@/api'
+import { AppContext } from '@/context'
 
 import './App.css'
 
@@ -28,7 +30,7 @@ export async function Loader() {
   // return {
   //   date: new Date().toISOString(),
   // }
-} 
+}
 
 const actionS1 = async () => {
   return await fetchData()
@@ -36,6 +38,19 @@ const actionS1 = async () => {
 
 function App() {
   const [count, setCount] = useState(0)
+  const [state, setState] = useState({
+    count: 0,
+  })
+
+  const setAppContextState = (newState) => {
+    setState((state) => {
+      return {
+        ...state,
+        ...newState,
+      }
+    })
+  }
+
   const oldway = () => {
     return (
       <BrowserRouter>
@@ -73,12 +88,14 @@ function App() {
             path: 'home',
             // lazy: () => import('./pages/Home'), //不对, 得用 module.default
             loader: Loader,
-            action: actionS1,
-            lazy: async () => {
-              let module = await import('./pages/Home')
-              let Component = module.default
-              return { Component }
-            },
+            // action: actionS1,
+
+            element: <Home></Home>,
+            // lazy: async () => {
+            //   let module = await import('./pages/Home')
+            //   let Component = module.default
+            //   return { Component }
+            // },
             children: [
               {
                 path: ':id',
@@ -102,6 +119,10 @@ function App() {
             },
           },
           {
+            path: 'about',
+            element: <About></About>
+          },
+          {
             path: '*',
             element: (
               <ErrorPage
@@ -117,10 +138,14 @@ function App() {
     ])
 
     return (
-      <RouterProvider
-        router={browserRouter}
-        fallbackElement={<div>FallBack Element</div>}
-      />
+      <AppContext.Provider
+        value={{ state, setState: setAppContextState }}
+      >
+        <RouterProvider
+          router={browserRouter}
+          fallbackElement={<div>FallBack Element</div>}
+        />
+      </AppContext.Provider>
     )
   }
 
