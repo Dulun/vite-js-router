@@ -13,15 +13,33 @@ const Layout = () => {
   return (
     <div className={styles.container}>
       <div className={styles.sider}>
-        <Link to='/'>/</Link>
-        <br />
-        <Link to='/home'>home</Link>
-        <br />
-        <Link to='/order'>order</Link>
-        <br />
-        <Link to='/home/h1'>h1</Link>
-        <br />
-        <Link to='/about'>About</Link>
+        {[
+          {
+            to: '/',
+          },
+          {
+            to: '/home',
+          },
+          {
+            to: '/order',
+          },
+          {
+            to: '/home/h1',
+          },
+          {
+            to: '/about',
+          },
+        ].map((item, index) => {
+          return (
+            <div key={index}>
+              <Link to={item.to}>
+                {item.to.replace('/', '') || '/'}
+              </Link>
+              <br />
+            </div>
+          )
+        })}
+        <div style={{ height: '20px' }}></div>
         <div>{navigation.state}</div>
       </div>
       <div className={styles.content}>
