@@ -25,8 +25,12 @@ const genUniqueId = () => {
   return id
 }
 
-/*
- * Map AbortController to cancel Request
+/**
+ * Add controller to map and return controller
+ *
+ * @param {string} uuid
+ * @param {string} url
+ * @returns {AbortController}
  */
 const getAbortControllerAddedToMap = (uuid, url = '') => {
   const controler = new AbortController()
@@ -63,8 +67,10 @@ const cancelUrlRequests = (url) => {
   }
 }
 
-/*
+/**
  * Cancel certain request by uuid
+ *
+ * @param {string} uuid
  */
 const cancelRequestByUuid = (uuid) => {
   if (abortControllerMap.has(uuid)) {
