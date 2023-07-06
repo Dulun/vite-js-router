@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useAppcontext } from '@/context'
-import { usePrevious } from '@/utils/hooks'
+import { usePrevious } from '@/hooks'
 
 const Component = () => {
   const context = useAppcontext()

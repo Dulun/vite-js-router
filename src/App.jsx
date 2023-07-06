@@ -16,6 +16,7 @@ import ErrorPage from '@/pages/ErrorPage'
 import About from '@/pages/About'
 import { fetchData } from '@/api'
 import { AppContext } from '@/context'
+import { request } from '@/api'
 
 import './App.css'
 
@@ -120,7 +121,7 @@ function App() {
           },
           {
             path: 'about',
-            element: <About></About>
+            element: <About></About>,
           },
           {
             path: '*',

@@ -1,11 +1,28 @@
-const fetchData = () => {
-  return new Promise((resolve) =>
-    setTimeout(() => {
-      resolve({
-        data: 'Hello World',
-      })
-    }, 1000)
-  )
+import { request } from './request'
+export * from './request'
+
+const url = {
+  randomDogPic: 'api/breeds/image/random',
+}
+class Api {
+  constructor() {
+    this.request = request
+    Object.entries(url).forEach(([key, value]) => {
+      this[key] = value
+    })
+  }
+
+  getRandomDogPic(getter) {
+    getter()
+    return this.request.get('api/breeds/image/random')
+  }
 }
 
-export { fetchData }
+const APIInstance = new Api()
+
+export const getRandomDogPic = () => {
+  // api/breeds/image/random
+  return request.get('api/breeds/image/random')
+}
+
+export default APIInstance

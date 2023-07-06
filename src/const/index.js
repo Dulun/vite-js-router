@@ -1,0 +1,7 @@
+export const REQUEST_CODE = {
+  SUCCESS: 0,
+  ERROR: 1,
+  TOKEN_EXPIRED: 2,
+  TOKEN_NOT_FOUND: 4,
+  TOKEN_NOT_MATCH: 5,
+}
