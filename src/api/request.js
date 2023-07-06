@@ -2,12 +2,16 @@ import Axios from 'axios'
 import { version } from '../../package.json'
 import { REQUEST_CODE } from '@/const'
 import { v4 as uuidv4 } from 'uuid'
+import qs from 'query-string'
+
+//TODO: add request queue
+const requestQueue = []
 
 const request = Axios.create({
   headers: {
     'x-fe-version': version,
   },
-  timeout: 5000,
+  timeout: 10000,
   timeoutErrorMessage: 'Request Timeout',
 })
 
@@ -24,31 +28,26 @@ const genUniqueId = () => {
 /*
  * Map AbortController to cancel Request
  */
-request.interceptors.request.use((config) => {
+const getAbortControllerAddedToMap = (uuid, url = '') => {
   const controler = new AbortController()
-  abortControllerMap.set(genUniqueId(), {
+  abortControllerMap.set(uuid, {
     controler,
-    url: config.url,
+    url,
   })
+  return controler
+}
 
-  Object.entries(abortControllerMap).forEach(
-    ([key, value]) => {
-      console.log('@@????', key, value)
-    }
-  )
-
-  config.signal = controler.signal
-  return config
-})
+const deleteAbortController = (uuid) => {
+  abortControllerMap.delete(uuid)
+}
 
 /*
  * Cancel all request
  */
 const cancelAllRequests = () => {
   for (const [key, value] of abortControllerMap) {
-    console.log('@@aborting', key, value.url)
     value.controler.abort()
-    abortControllerMap.delete(key)
+    deleteAbortController(key)
   }
 }
 
@@ -56,14 +55,21 @@ const cancelAllRequests = () => {
  * Cancel all url request
  */
 const cancelUrlRequests = (url) => {
-  for (const [
-    uuid,
-    value,
-  ] of abortControllerMap.entries()) {
+  for (const [key, value] of abortControllerMap) {
     if (value.url === url) {
-      value.controller.abort()
-      abortControllerMap.delete(uuid)
+      value.controler.abort()
+      abortControllerMap.delete(key)
     }
+  }
+}
+
+/*
+ * Cancel certain request by uuid
+ */
+const cancelRequestByUuid = (uuid) => {
+  if (abortControllerMap.has(uuid)) {
+    abortControllerMap.get(uuid).controler.abort()
+    abortControllerMap.delete(uuid)
   }
 }
 
@@ -73,6 +79,7 @@ request.interceptors.response.use((response) => {
   if (statusCode === 200) {
     return response.data
   }
+
   throw response
 })
 
@@ -99,6 +106,30 @@ const fetchData = () => {
   )
 }
 
+const get = (url, data, reportUuid) => {
+  const config = {}
+
+  const uuid = genUniqueId()
+
+  const _url = `${url}?${qs.stringify(data)}`
+
+  config.signal = getAbortControllerAddedToMap(
+    uuid,
+    url
+  ).signal
+
+  typeof reportUuid === 'function' && reportUuid?.(uuid)
+
+  return request.get(_url, config).then((res) => {
+    deleteAbortController(uuid)
+    return Promise.resolve(res)
+  })
+}
+
+export default {
+  get,
+}
+
 export {
   fetchData,
   request,
@@ -106,4 +137,5 @@ export {
   createHeadersInterceptor,
   cancelAllRequests,
   cancelUrlRequests,
+  cancelRequestByUuid,
 }

@@ -4,9 +4,9 @@ import React, { useEffect, useRef } from 'react'
  * use like componentDidMount, run only once in react18.
  *
  * @param func: callBack Function
- * @param deps: dependencies
+ * @param deps: effect dependencies
  */
-const useDidMountEffect = (func, deps) => {
+const useDidMountEffect = (func, deps = []) => {
   const didMount = useRef(false)
 
   useEffect(() => {

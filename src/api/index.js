@@ -1,4 +1,4 @@
-import { request } from './request'
+import request from './request'
 export * from './request'
 
 const url = {
@@ -20,9 +20,13 @@ class Api {
 
 const APIInstance = new Api()
 
-export const getRandomDogPic = () => {
+export const getRandomDogPic = (data, reportUuid) => {
   // api/breeds/image/random
-  return request.get('api/breeds/image/random')
+  return request.get(
+    'api/breeds/image/random',
+    data,
+    reportUuid
+  )
 }
 
 export default APIInstance

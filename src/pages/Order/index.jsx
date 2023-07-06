@@ -1,12 +1,16 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import {
   getRandomDogPic,
   request,
   cancelAllRequests,
+  cancelRequestByUuid,
+  cancelUrlRequests,
 } from '@/api'
 import { getDogAPIBaseURL } from '@/utils'
 import { useDidMountEffect } from '@/hooks'
 import Loading from '@/components/Loading'
+
+import styles from './index.module.scss'
 
 // env: import.meta.env.MODE
 const Order = (props) => {
@@ -15,12 +19,29 @@ const Order = (props) => {
   const [dogPicSrc, setDogPicSrc] = useState('')
   const [queryStatus, setQueryStatus] = useState('idle')
 
+  const queue = useRef([])
+
+  const cancle = () => {
+    queue.current.forEach((q) => {
+      cancelRequestByUuid(q)
+    })
+    queue.current = []
+  }
+
   const fetch = () => {
-    if (queryStatus === 'loading') return
     isFetching = true
     setQueryStatus('loading')
 
-    getRandomDogPic()
+    getRandomDogPic(
+      {
+        name: 'test',
+        age: '190',
+      },
+      (id) => {
+        queue.current.push(id)
+        console.log('@@ queue', queue.current)
+      }
+    )
       .then((res) => {
         console.log('@@#res', res)
         setDogPicSrc(res.message)
@@ -33,18 +54,23 @@ const Order = (props) => {
 
   useDidMountEffect(fetch, [])
 
+  const cancleUrlReq = () => {
+    cancelUrlRequests('api/breeds/image/random')
+  }
+
   return (
     <div>
       Order
-      {isFetching ? (
+      {queryStatus === 'loading' ? (
         <Loading />
       ) : (
         <img src={dogPicSrc} alt='' width={200} />
       )}
-      <button onClick={fetch}>Refresh</button>
-      <button onClick={cancelAllRequests}>
-        cancelAllRequest
-      </button>
+      <div className={styles.buttons}>
+        <button onClick={fetch}>Refresh</button>
+        <button onClick={cancle}>cancelqueueRequest</button>
+        <button onClick={cancleUrlReq}>cancel url</button>
+      </div>
     </div>
   )
 }
