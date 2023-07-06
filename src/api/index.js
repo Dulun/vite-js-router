@@ -1,7 +1,7 @@
 import request from './request'
 export * from './request'
 
-const url = {
+export const url = {
   randomDogPic: 'api/breeds/image/random',
 }
 class Api {
