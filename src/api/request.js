@@ -56,9 +56,9 @@ const cancelAllRequests = () => {
 }
 
 /*
- * Cancel all url request
+ * Cancel request by url
  */
-const cancelUrlRequests = (url) => {
+const cancelRequestsByUrl = (url) => {
   for (const [key, value] of abortControllerMap) {
     if (value.url === url) {
       value.controler.abort()
@@ -142,6 +142,6 @@ export {
   injectHeaders,
   createHeadersInterceptor,
   cancelAllRequests,
-  cancelUrlRequests,
+  cancelRequestsByUrl,
   cancelRequestByUuid,
 }

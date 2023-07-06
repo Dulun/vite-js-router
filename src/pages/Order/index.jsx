@@ -4,7 +4,7 @@ import {
   request,
   cancelAllRequests,
   cancelRequestByUuid,
-  cancelUrlRequests,
+  cancelRequestsByUrl,
 } from '@/api'
 import { getDogAPIBaseURL } from '@/utils'
 import { useDidMountEffect } from '@/hooks'
@@ -55,7 +55,7 @@ const Order = (props) => {
   useDidMountEffect(fetch, [])
 
   const cancleUrlReq = () => {
-    cancelUrlRequests('api/breeds/image/random')
+    cancelRequestsByUrl('api/breeds/image/random')
   }
 
   return (
