@@ -13,4 +13,25 @@ const useAppcontext = () => {
   return context
 }
 
-export { AppContext, useAppcontext }
+const withAppContext = (Component) => {
+  const name =
+    Component.displayName || Component.name || 'Component'
+
+  const componentWrapper = React.forwardRef(
+    (props, ref) => {
+      const context = useAppcontext()
+      return (
+        <Component
+          {...props}
+          _ref={ref}
+          context={context}
+        />
+      )
+    }
+  )
+  componentWrapper.displayName = name
+
+  return componentWrapper
+}
+
+export { AppContext, useAppcontext, withAppContext }
