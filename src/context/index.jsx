@@ -21,11 +21,9 @@ const withAppContext = (Component) => {
     (props, ref) => {
       const context = useAppcontext()
       return (
-        <Component
-          {...props}
-          _ref={ref}
-          context={context}
-        />
+        <Component {...props} _ref={ref} context={context}>
+          {props.children}
+        </Component>
       )
     }
   )
