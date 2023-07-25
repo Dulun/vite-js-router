@@ -19,10 +19,14 @@ const createDummyProducts = (count = 10000) => {
 
 const ProductList = (props) => {
   const { products } = props
+  // useDeferredValue will return a defered value when in concurrent mode
+  // 如果控制不了state的更新，可以使用useDeferredValue
+  // 可以达到65行一样的效果
+  const deferedProducts = useDeferredValue(products)
 
   return (
     <ul className={styles.productList}>
-      {products.map((product, index) => (
+      {deferedProducts.map((product, index) => (
         <li key={index}>{product}</li>
       ))}
     </ul>
@@ -57,9 +61,12 @@ const Component = () => {
   const renderDeferedValue = () => {
     const onChange = (e) => {
       startTransition(() => {
-        // low proirity
-        setProductList(filterProducts(e.target.value))
+        console.log('@@@is pending', isPending)
+        // low proirity, only render when idle
+        // setProductList(filterProducts(e.target.value))
       })
+      setProductList(filterProducts(e.target.value))
+
       setString(e.target.value)
     }
 
@@ -75,6 +82,8 @@ const Component = () => {
     <div style={{ overflow: 'auto' }}>
       <h2>About</h2>
       <h3>AppContextState:</h3>
+      <h3>{isPending ? 'loading' : isPending}</h3>
+
       {JSON.stringify(context.state)}
       {JSON.stringify(prevContext)}
       <button
