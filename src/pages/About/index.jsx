@@ -6,36 +6,67 @@ import React, {
 import { useAppcontext } from '@/context'
 import { usePrevious } from '@/hooks'
 
+import styles from './index.module.scss'
+
+const createDummyProducts = (count = 10000) => {
+  let products = []
+  for (let i = 0; i < count; i++) {
+    products.push(`Product-${i}`)
+  }
+  return products
+}
+
+const ProductList = (props) => {
+  const { products } = props
+
+  return (
+    <ul className={styles.productList}>
+      {products.map((product, index) => (
+        <li key={index}>{product}</li>
+      ))}
+    </ul>
+  )
+}
+
 const Component = () => {
   const context = useAppcontext()
-
-  const prevContext = usePrevious(context.state)
-
-  const [count, setCount] = React.useState(0)
-  const prevCount = usePrevious(count)
   const [string, setString] = useState('')
+  const [count, setCount] = React.useState(0)
+  const prevContext = usePrevious(context.state)
   const deferedString = useDeferredValue(string)
+  const prevCount = usePrevious(count)
+
+  const dummyProducts = createDummyProducts()
+
+  const filterProducts = (target) => {
+    if (!target) return dummyProducts
+
+    return dummyProducts.filter((product) =>
+      product.includes(target)
+    )
+  }
+
+  const products = filterProducts(string)
 
   const renderDeferedValue = () => {
     const onChange = (e) => {
-      console.log('@#@@@inputing', e.target.value)
       setString(e.target.value)
     }
 
     return (
-      <React.Suspense>
+      <>
         <input
           type='text'
           onChange={onChange}
           value={string}
         />
         <div>deferedValue:{deferedString}</div>
-      </React.Suspense>
+      </>
     )
   }
 
   return (
-    <div>
+    <div style={{ overflow: 'auto' }}>
       <h2>About</h2>
       <h3>AppContextState:</h3>
       {JSON.stringify(context.state)}
@@ -48,6 +79,7 @@ const Component = () => {
         {count}:{prevCount}
       </button>
       {renderDeferedValue()}
+      <ProductList products={products} />
     </div>
   )
 }
