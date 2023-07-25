@@ -2,6 +2,7 @@ import React, {
   useEffect,
   useDeferredValue,
   useState,
+  useTransition,
 } from 'react'
 import { useAppcontext } from '@/context'
 import { usePrevious } from '@/hooks'
@@ -36,7 +37,12 @@ const Component = () => {
   const deferedString = useDeferredValue(string)
   const prevCount = usePrevious(count)
 
+  const [isPending, startTransition] = useTransition()
+
   const dummyProducts = createDummyProducts()
+
+  const [productList, setProductList] =
+    useState(dummyProducts)
 
   const filterProducts = (target) => {
     if (!target) return dummyProducts
@@ -50,17 +56,17 @@ const Component = () => {
 
   const renderDeferedValue = () => {
     const onChange = (e) => {
+      startTransition(() => {
+        // low proirity
+        setProductList(filterProducts(e.target.value))
+      })
       setString(e.target.value)
     }
 
     return (
       <>
-        <input
-          type='text'
-          onChange={onChange}
-          value={string}
-        />
-        <div>deferedValue:{deferedString}</div>
+        <input type='text' onChange={onChange} />
+        {/* <div>deferedValue:{deferedString}</div> */}
       </>
     )
   }
@@ -79,7 +85,7 @@ const Component = () => {
         {count}:{prevCount}
       </button>
       {renderDeferedValue()}
-      <ProductList products={products} />
+      <ProductList products={productList} />
     </div>
   )
 }
