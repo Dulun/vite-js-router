@@ -21,7 +21,7 @@ const ProductList = (props) => {
   const { products } = props
   // useDeferredValue will return a defered value when in concurrent mode
   // 如果控制不了state的更新，可以使用useDeferredValue
-  // 可以达到65行一样的效果
+  // 可以达到65行一样的效果 
   const deferedProducts = useDeferredValue(products)
 
   return (
