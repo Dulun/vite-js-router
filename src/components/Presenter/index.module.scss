@@ -1,0 +1,41 @@
+.presenter {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  // flex-direction: column; // 因为在点击详情就有问题
+  background-color: #18191a;
+  // background-color: #fafafa;
+  // background-color: #f2f2f2;
+  // overflow: hidden;
+  overflow: auto;
+  // padding-top: 32px;
+  // overflow: hidden;
+  // flex-wrap: wrap;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  &.absolute {
+    position: absolute;
+    // transition: transform .2s linear;
+    transition: all 0.3s cubic-bezier(0.65, 0, 0.35, 1) !important; // left, width
+  }
+}
+
+.mask {
+  content: '';
+  position: absolute;
+  height: 100%;
+  top: 0;
+  z-index: 1;
+}
+
+.presenterMask {
+  background-color: rgba(0, 0, 0, 0.7);
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
