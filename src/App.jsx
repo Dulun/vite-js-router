@@ -11,6 +11,7 @@ import {
 import Home from '@/pages/Home'
 import HHome1 from './pages/Home/H1'
 import Order from './pages/Order'
+import Memo from './pages/Home/Memo'
 import Layout from './pages/Layout'
 import ErrorPage from '@/pages/ErrorPage'
 import About from '@/pages/About'
@@ -118,6 +119,10 @@ function App() {
               let C = await import('./pages/Home/H1')
               return { Component: C.default }
             },
+          },
+          {
+            path: 'home/memo',
+            element: <Memo></Memo>,
           },
           {
             path: 'about',

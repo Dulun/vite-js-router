@@ -27,6 +27,9 @@ const Layout = () => {
             to: '/home/h1',
           },
           {
+            to: '/home/memo',
+          },
+          {
             to: '/about',
           },
         ].map((item, index) => {

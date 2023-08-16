@@ -12,9 +12,19 @@ const Modal = (props) => {
   const [_visible, setVisible] = useState(false)
 
   const onShow = () => {
+    if (isAnimating.current) return
+    isAnimating.current = true
+
+    window.prompt('123')
+
     modalWrapperRef?.current?.classList.add(styles.fadeIn)
     modalRef?.current?.classList.add(styles.fadeIn)
     setVisible(true)
+
+    const timer = setTimeout(() => {
+      isAnimating.current = false
+      clearTimeout(timer)
+    }, 300)
   }
 
   const onHide = () => {
