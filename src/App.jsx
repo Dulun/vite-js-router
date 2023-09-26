@@ -72,72 +72,173 @@ function App() {
       import('./pages/Order')
     )
 
+    //lazy load
+    // let browserRouter = createBrowserRouter([
+    //   {
+    //     path: '/',
+    //     Component: Layout,
+    //     // errorElement: <ErrorPage />,
+    //     children: [
+    //       {
+    //         index: true,
+    //         element: (
+    //           <React.Suspense fallback={<p>fallback</p>}>
+    //             <LazyHome></LazyHome>
+    //           </React.Suspense>
+    //         ),
+    //       },
+    //       {
+    //         path: 'home',
+    //         // lazy: () => import('./pages/Home'), //不对, 得用 module.default
+    //         loader: Loader,
+    //         // action: actionS1,
+
+    //         element: <Home></Home>,
+    //         // lazy: async () => {
+    //         //   let module = await import('./pages/Home')
+    //         //   let Component = module.default
+    //         //   return { Component }
+    //         // },
+    //         children: [
+    //           {
+    //             path: ':id',
+    //             element: <Home></Home>,
+    //           },
+    //         ],
+    //       },
+    //       {
+    //         path: 'order',
+    //         lazy: async () => {
+    //           let C = await import('./pages/Order')
+    //           return { Component: C.default }
+    //         },
+    //       },
+
+    //       {
+    //         path: 'home/h1',
+    //         lazy: async () => {
+    //           let C = await import('./pages/Home/H1')
+    //           return { Component: C.default }
+    //         },
+    //       },
+    //       {
+    //         path: 'home/memo',
+    //         element: <Memo></Memo>,
+    //       },
+    //       {
+    //         path: 'about',
+    //         element: <About></About>,
+    //       },
+    //       {
+    //         path: '*',
+    //         element: (
+    //           <ErrorPage
+    //             error={{
+    //               statusText: '404',
+    //               message: 'Not Found',
+    //             }}
+    //           />
+    //         ),
+    //       },
+    //     ],
+    //   },
+    // ])
+
+    // The Outlet component will always render the next matching route, so it’s a good idea to put it at the end of your route list.
+    // let browserRouter = createBrowserRouter([
+    //   {
+    //     path: '/',
+    //     element: <Layout></Layout>,
+    //     children: [
+    //       {
+    //         index: true,
+    //         element: <Order></Order>,
+    //       },
+    //       {
+    //         path: 'home',
+    //         loader: Loader,
+    //         element: <Home></Home>,
+    //         children: [
+    //           // {
+    //           //   index: true,
+    //           //   element: <Home></Home>,
+    //           // },
+    //           {
+    //             path: ':id',
+    //             element: <Home></Home>,
+    //           },
+    //           {
+    //             path: 'h1',
+    //             element: <HHome1></HHome1>,
+    //           },
+    //           {
+    //             path: 'memo',
+    //             element: <Memo></Memo>,
+    //           },
+    //         ],
+    //       },
+    //       {
+    //         path: 'order',
+    //         element: <Order></Order>,
+    //       },
+    //       {
+    //         path: 'about',
+    //         element: <About></About>,
+    //       },
+    //       {
+    //         path: '*',
+    //         element: (
+    //           <ErrorPage
+    //             error={{
+    //               statusText: '404',
+    //               message: 'Not Found',
+    //             }}
+    //           />
+    //         ),
+    //       },
+    //     ],
+    //   },
+    //   {
+    //     path: '/admin',
+    //     element: (
+    //       <ErrorPage
+    //         error={{
+    //           statusText: '404',
+    //           message: 'Not Found',
+    //         }}
+    //       />
+    //     ),
+    //   }
+    // ])
+
     let browserRouter = createBrowserRouter([
       {
         path: '/',
-        Component: Layout,
-        // errorElement: <ErrorPage />,
+        element: <Layout></Layout>,
         children: [
           {
             index: true,
-            element: (
-              <React.Suspense fallback={<p>fallback</p>}>
-                <LazyHome></LazyHome>
-              </React.Suspense>
-            ),
+            element: <Order></Order>,
           },
+        ],
+      },
+      {
+        path: '/admin',
+        element: <Layout></Layout>,
+        children: [
           {
-            path: 'home',
-            // lazy: () => import('./pages/Home'), //不对, 得用 module.default
-            loader: Loader,
-            // action: actionS1,
-
-            element: <Home></Home>,
-            // lazy: async () => {
-            //   let module = await import('./pages/Home')
-            //   let Component = module.default
-            //   return { Component }
-            // },
-            children: [
-              {
-                path: ':id',
-                element: <Home></Home>,
-              },
-            ],
+            index: true,
+            element: <Order></Order>,
           },
+        ],
+      },
+      {
+        path: '/admin/abc',
+        element: <Layout></Layout>,
+        children: [
           {
-            path: 'order',
-            lazy: async () => {
-              let C = await import('./pages/Order')
-              return { Component: C.default }
-            },
-          },
-
-          {
-            path: 'home/h1',
-            lazy: async () => {
-              let C = await import('./pages/Home/H1')
-              return { Component: C.default }
-            },
-          },
-          {
-            path: 'home/memo',
-            element: <Memo></Memo>,
-          },
-          {
-            path: 'about',
-            element: <About></About>,
-          },
-          {
-            path: '*',
-            element: (
-              <ErrorPage
-                error={{
-                  statusText: '404',
-                  message: 'Not Found',
-                }}
-              />
-            ),
+            index: true,
+            element: <HHome1></HHome1>,
           },
         ],
       },

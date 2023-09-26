@@ -342,7 +342,7 @@ const Home = (props) => {
 
   return (
     <div>
-      <button onClick={open}>Open Dialog</button>
+      <button onClick={open}>Home/</button>
       <Dialog isOpen={showDialog} onDismiss={close}>
         <button className='close-button' onClick={close}>
           <span aria-hidden>×</span>
@@ -367,10 +367,11 @@ const Home = (props) => {
       >
         Presenter push
       </button>
-      <p>data:</p>
-      {data.data}
+      {/* <p>data:</p> */}
+      {/* {data.data} */}
+      <Outlet></Outlet>
 
-      {presenters.map((p, i) =>
+      {/* {presenters.map((p, i) =>
         React.cloneElement(p.Comp, {
           // leaving: this.state.leavingUid === p.uid,
           idx: i,
@@ -386,7 +387,7 @@ const Home = (props) => {
           //__isTop: context.topPageUid === p.uid,
           //__isValidTop: context.validTopPageUid === p.uid,
         })
-      )}
+      )} */}
     </div>
   )
 }

@@ -74,6 +74,7 @@ const cancelRequestsByUrl = (url) => {
  */
 const cancelRequestByUuid = (uuid) => {
   if (abortControllerMap.has(uuid)) {
+    
     abortControllerMap.get(uuid).controler.abort()
     abortControllerMap.delete(uuid)
   }

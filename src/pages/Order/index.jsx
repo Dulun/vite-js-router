@@ -60,7 +60,7 @@ const Order = (props) => {
 
   return (
     <div>
-      Order
+      <h2>Order</h2>
       {queryStatus === 'loading' ? (
         <Loading />
       ) : (

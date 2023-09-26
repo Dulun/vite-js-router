@@ -15,7 +15,7 @@ const Modal = (props) => {
     if (isAnimating.current) return
     isAnimating.current = true
 
-    window.prompt('123')
+    // window.prompt('123')
 
     modalWrapperRef?.current?.classList.add(styles.fadeIn)
     modalRef?.current?.classList.add(styles.fadeIn)
@@ -23,6 +23,10 @@ const Modal = (props) => {
 
     const timer = setTimeout(() => {
       isAnimating.current = false
+      modalWrapperRef?.current?.classList.remove(
+        styles.fadeIn
+      )
+      modalRef?.current?.classList.remove(styles.fadeIn)
       clearTimeout(timer)
     }, 300)
   }
@@ -30,6 +34,7 @@ const Modal = (props) => {
   const onHide = () => {
     if (isAnimating.current) return
     isAnimating.current = true
+    console.log('@@@-----2-----close')
 
     modalWrapperRef?.current?.classList.add(styles.fadeOut)
     modalRef?.current?.classList.add(styles.fadeOut)
@@ -46,17 +51,14 @@ const Modal = (props) => {
     if (visible) {
       onShow()
     }
-    if (!visible) {
-      onHide()
-    }
   }, [visible])
-
-  if (!visible && !_visible) {
-    return null
-  }
 
   const onModalClicked = (e) => {
     e.stopPropagation()
+  }
+
+  if (!visible && !_visible) {
+    return null
   }
 
   return createPortal(

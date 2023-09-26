@@ -16,7 +16,7 @@ const HHome1 = (props) => {
 
   return (
     <div ref={contaienr}>
-      H1
+      <h2>home/H1</h2>
       <button onClick={onShowModal}>show modal</button>
       <Modal
         driftLeftSider={200}

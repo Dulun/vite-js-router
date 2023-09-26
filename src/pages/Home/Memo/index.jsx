@@ -9,6 +9,7 @@ const MemoDumy = () => {
 
   return (
     <div className={styles.container}>
+      <h2>Memo</h2>
       <label>
         {/* <span className={styles.iconHolder}></span> */}
         <input
