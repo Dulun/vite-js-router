@@ -4,7 +4,6 @@ import cx from 'classnames'
 import styles from './index.module.scss'
 
 const Modal = (props) => {
-  const { visible } = props
   const modalRef = useRef(null)
   const isAnimating = useRef(false)
   const modalWrapperRef = useRef(null)
@@ -14,8 +13,6 @@ const Modal = (props) => {
   const onShow = () => {
     if (isAnimating.current) return
     isAnimating.current = true
-
-    // window.prompt('123')
 
     modalWrapperRef?.current?.classList.add(styles.fadeIn)
     modalRef?.current?.classList.add(styles.fadeIn)
@@ -31,10 +28,10 @@ const Modal = (props) => {
     }, 300)
   }
 
-  const onHide = () => {
+  const onHide = (e) => {
+    e.stopPropagation()
     if (isAnimating.current) return
     isAnimating.current = true
-    console.log('@@@-----2-----close')
 
     modalWrapperRef?.current?.classList.add(styles.fadeOut)
     modalRef?.current?.classList.add(styles.fadeOut)
@@ -43,21 +40,25 @@ const Modal = (props) => {
       setVisible(false)
       props.onClose()
       isAnimating.current = false
+      modalWrapperRef?.current?.classList.remove(
+        styles.fadeOut
+      )
+      modalRef?.current?.classList.remove(styles.fadeOut)
       clearTimeout(timer)
     }, 300)
   }
 
   useEffect(() => {
-    if (visible) {
+    if (props.visible) {
       onShow()
     }
-  }, [visible])
+  }, [props.visible])
 
   const onModalClicked = (e) => {
     e.stopPropagation()
   }
 
-  if (!visible && !_visible) {
+  if (!props.visible && !_visible) {
     return null
   }
 
