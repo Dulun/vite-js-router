@@ -21,7 +21,7 @@ import { request } from '@/api'
 import ProductDetail from './pages/Product/ProductDetail'
 import './App.css'
 import Product from './pages/Product'
-import CheckoutSDK from '@planet-fe/checkout-web'
+import PromisePage from './pages/PromisePage'
 
 export function sleep(n = 1000) {
   return new Promise((r) => setTimeout(r, n))
@@ -54,10 +54,6 @@ function App() {
       }
     })
   }
-
-  useEffect(() => {
-    console.log('@#####', CheckoutSDK.version)
-  }, [])
 
   const oldway = () => {
     return (
@@ -278,6 +274,10 @@ function App() {
           {
             path: 'about',
             element: <About></About>,
+          },
+          {
+            path: 'promise',
+            element: <PromisePage></PromisePage>,
           },
           {
             path: '*',
