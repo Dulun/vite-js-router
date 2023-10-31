@@ -25,10 +25,36 @@ const middleWare1 = (context, next) => {
   next()
 }
 
+const middleWare2 = (context, next) => {
+  console.log('context2', context)
+
+  setTimeout(() => {
+    context.m2 = '123'
+    next()
+  }, 1000)
+}
+
+const middleWare3 = (context, next) => {
+  context.m2 += '456'
+  console.log('context3', context)
+
+  next()
+}
+
 const PromisePage = () => {
   const handleClick = () => {
-    microFlow([middleWare1, middleWare1])({
-      a: 100,
+    const context = {
+      b: 'b',
+    }
+
+    microFlow([
+      middleWare1,
+      middleWare1,
+      middleWare2,
+      middleWare3,
+    ])(context).then((k) => {
+      console.log('@@@@k', k)
+      console.log('@@@@k', context)
     })
   }
 
