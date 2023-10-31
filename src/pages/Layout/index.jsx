@@ -32,6 +32,9 @@ const Layout = () => {
           {
             to: '/about',
           },
+          {
+            to: '/product',
+          },
         ].map((item, index) => {
           return (
             <div key={index}>

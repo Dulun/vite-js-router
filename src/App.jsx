@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   BrowserRouter,
   Routes,
@@ -18,8 +18,10 @@ import About from '@/pages/About'
 import { fetchData } from '@/api'
 import { AppContext } from '@/context'
 import { request } from '@/api'
-
+import ProductDetail from './pages/Product/ProductDetail'
 import './App.css'
+import Product from './pages/Product'
+import CheckoutSDK from '@planet-fe/checkout-web'
 
 export function sleep(n = 1000) {
   return new Promise((r) => setTimeout(r, n))
@@ -52,6 +54,10 @@ function App() {
       }
     })
   }
+
+  useEffect(() => {
+    console.log('@#####', CheckoutSDK.version)
+  }, [])
 
   const oldway = () => {
     return (
@@ -220,25 +226,69 @@ function App() {
             index: true,
             element: <Order></Order>,
           },
-        ],
-      },
-      {
-        path: '/admin',
-        element: <Layout></Layout>,
-        children: [
           {
-            index: true,
+            path: 'home',
+            element: <Home></Home>,
+          },
+          {
+            path: 'product',
+            element: <Product></Product>,
+          },
+          {
+            path: 'product/:id',
+            element: <ProductDetail></ProductDetail>,
+          },
+          {
+            path: 'product/:id/productdetail',
+            element: <ProductDetail></ProductDetail>,
+            children: [
+              {
+                index: true,
+                element: <ProductDetail></ProductDetail>,
+              },
+            ],
+          },
+          {
+            path: 'product/:id/productdetail/:detailid',
+            element: <ProductDetail></ProductDetail>,
+          },
+          {
+            path: 'home',
+            loader: Loader,
+            element: <Home></Home>,
+            children: [
+              {
+                path: ':id',
+                element: <Home></Home>,
+              },
+              {
+                path: 'h1',
+                element: <HHome1></HHome1>,
+              },
+              {
+                path: 'memo',
+                element: <Memo></Memo>,
+              },
+            ],
+          },
+          {
+            path: 'order',
             element: <Order></Order>,
           },
-        ],
-      },
-      {
-        path: '/admin/abc',
-        element: <Layout></Layout>,
-        children: [
           {
-            index: true,
-            element: <HHome1></HHome1>,
+            path: 'about',
+            element: <About></About>,
+          },
+          {
+            path: '*',
+            element: (
+              <ErrorPage
+                error={{
+                  statusText: '404',
+                  message: 'Not Found',
+                }}
+              />
+            ),
           },
         ],
       },
