@@ -58,14 +58,125 @@ const PromisePage = () => {
     })
   }
 
+  const handleClick1 = () => {
+    const p = new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve('123')
+      }, 10)
+    })
+
+    p.then((res) => {
+      console.log('then1', res)
+      return '456'
+    })
+      .finally((res) => {
+        console.log('finally', res)
+        return 'finaly'
+      })
+      .then((res) => {
+        console.log('then2', res)
+        throw new Error({ code: res })
+      })
+      .catch((e) => {
+        console.log('eeee', e)
+        return 'catched'
+      })
+      .then((res) => {
+        console.log('then3', res)
+        return res + 'then3'
+      })
+
+      .then((res) => {
+        console.log('then4', res)
+        return 'then4'
+      })
+  }
+
+  const handleClick2 = () => {
+    let p = new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve('123')
+      }, 8)
+      setTimeout(() => {
+        reject('123')
+      }, 9)
+    })
+
+    p.then((res) => {
+      console.log('then1', res)
+    })
+    p.then((res) => {
+      console.log('then2', res)
+    })
+    p.then((res) => {
+      console.log('then3', res)
+    })
+
+    p.catch((res) => {
+      console.log('catch1', res)
+    })
+    p.catch((res) => {
+      console.log('catch2', res)
+    })
+    p.catch((res) => {
+      console.log('catch3', res)
+    })
+  }
+
+  const handleClick3 = () => {
+    // const p = new Promise((res, rej) => {
+    //   let num = Math.random()
+    //   if (num > 0.5) {
+    //     res(num)
+    //   }
+    //   rej(num)
+    // })
+    // p.catch((res) => {
+    //   console.log('catch1', res)
+    // }).then((e) => {
+    //   console.log('then1', e)
+    // })
+
+    const p1 = new Promise((res, rej) => {
+      let num = Math.random()
+      if (num > 0.5) {
+        res(num)
+      }
+      rej(num)
+    })
+    p1.then((e) => {
+      console.log('then1', e)
+      return new Promise((res) => {
+        setTimeout(() => {
+          console.log('KKK')
+          res(e)
+        }, 1000)
+      })
+    })
+      .then((e) => {
+        console.log('then2', e)
+      })
+      .catch((e) => {
+        console.log('catch1', e)
+      })
+      .finally(() => {
+        console.log('finally')
+      })
+  }
+
   return (
-    <div
-      onClick={() => {
-        handleClick()
-      }}
-    >
-      Promise
-    </div>
+    <>
+      <div
+        onClick={() => {
+          handleClick()
+        }}
+      >
+        Promise
+      </div>
+      <div onClick={handleClick1}>then chatch finally</div>
+      <div onClick={handleClick2}>pub sub</div>
+      <div onClick={handleClick3}>then catch</div>
+    </>
   )
 }
 
