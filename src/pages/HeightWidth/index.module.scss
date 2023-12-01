@@ -1,0 +1,11 @@
+.contaier {
+  height: 500px;
+  width: 500px;
+  background-color: lightcyan;
+  .scrollContainer {
+    height: 100%;
+    width: 80%;
+    overflow: auto;
+    background-color: lightcoral;
+  }
+}

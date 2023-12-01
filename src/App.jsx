@@ -18,6 +18,7 @@ import About from '@/pages/About'
 import { fetchData } from '@/api'
 import { AppContext } from '@/context'
 import { request } from '@/api'
+import HeightWidth from './pages/HeightWidth'
 import ProductDetail from './pages/Product/ProductDetail'
 import './App.css'
 import Product from './pages/Product'
@@ -278,6 +279,10 @@ function App() {
           {
             path: 'promise',
             element: <PromisePage></PromisePage>,
+          },
+          {
+            path: 'height-width',
+            element: <HeightWidth />,
           },
           {
             path: '*',

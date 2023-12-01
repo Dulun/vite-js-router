@@ -38,6 +38,9 @@ const Layout = () => {
           {
             to: '/promise',
           },
+          {
+            to: '/height-width',
+          },
         ].map((item, index) => {
           return (
             <div key={index}>
